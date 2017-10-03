@@ -1,4 +1,4 @@
-# basic-gl-loop - Simple library to provide a very basic GL application
+# basic-gl-shaders - Simple C++ wrappers for OpenGL shaders
 # Copyright (C) 2017 - Eduardo Costa
 #
 # This program is free software: you can redistribute it and/or modify
@@ -19,13 +19,20 @@ project(m4c0-bgl-shaders VERSION 0.0.1)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(EXPORT_NAME "${PROJECT_NAME}-config")
+
 add_library(${PROJECT_NAME} STATIC main.cpp)
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${PROJECT_NAME}.hpp")
 target_link_libraries(${PROJECT_NAME} PUBLIC "-framework OpenGL")
+target_link_libraries(${PROJECT_NAME} PUBLIC "-framework GLUT")
 install(
     TARGETS ${PROJECT_NAME}
+    EXPORT ${EXPORT_NAME}
     ARCHIVE DESTINATION lib
+    INCLUDES DESTINATION include
     PUBLIC_HEADER DESTINATION include)
+
+install(EXPORT ${EXPORT_NAME} DESTINATION "lib/cmake/${PROJECT_NAME}")
 
 find_package(m4c0-bgl-loop)
 if(m4c0-bgl-loop_FOUND)
@@ -35,4 +42,5 @@ if(m4c0-bgl-loop_FOUND)
 else()
     message("m4c0-bgl-loop not found - example was skipped")
 endif()
+
 
