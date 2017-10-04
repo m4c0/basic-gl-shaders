@@ -41,6 +41,7 @@ install(EXPORT ${EXPORT_NAME} DESTINATION "lib/cmake/${PROJECT_NAME}")
 find_package(m4c0-bgl-loop)
 if(m4c0-bgl-loop_FOUND)
     add_executable(example example.cpp)
+    target_compile_definitions(example PRIVATE "GL_GLEXT_PROTOTYPES") # FIXME: specially on Windows
     target_link_libraries(example PUBLIC ${PROJECT_NAME})
     target_link_libraries(example PUBLIC m4c0-bgl-loop)
 else()

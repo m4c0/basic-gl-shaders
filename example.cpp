@@ -30,12 +30,30 @@ public:
             { m4c0::shader::vertex,   "#version 330\nin vec2 pos; void main() { gl_Position = vec4(pos, 0, 1); }" },
             { m4c0::shader::fragment, "#version 330\nout vec4 color; void main() { color = vec4(1, 1, 1, 1); }" },
         };
+
+        GLuint vao, vbo;
+
+        glGenVertexArrays(1, &vao);
+        glBindVertexArray(vao);
+
+        static float vtx[] = { 0, 0, 0, 1, 1, 0, 0.75, 0.75 };
+
+        glGenBuffers(1, &vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vtx), vtx, GL_STATIC_DRAW);
+
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
     }
 
     void frame() override {
         m4c0::main::frame();
 
+        // Since we don't "use" another program, you could optimize it inside
+        // start(), but then you would not see the move constructor in action!
         prog.use();
+
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     }
 
 private:
