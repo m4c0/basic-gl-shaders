@@ -25,10 +25,7 @@ find_package(opengl-headers REQUIRED)
 
 add_library(${PROJECT_NAME} STATIC main.cpp)
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${PROJECT_NAME}.hpp")
-target_compile_definitions(${PROJECT_NAME} PRIVATE "GL_GLEXT_PROTOTYPES") # FIXME: specially on Windows
 target_link_libraries(${PROJECT_NAME} PUBLIC opengl-headers)
-target_link_libraries(${PROJECT_NAME} PUBLIC "-framework OpenGL")
-target_link_libraries(${PROJECT_NAME} PUBLIC "-framework GLUT")
 install(
     TARGETS ${PROJECT_NAME}
     EXPORT ${EXPORT_NAME}
@@ -41,7 +38,6 @@ install(EXPORT ${EXPORT_NAME} DESTINATION "lib/cmake/${PROJECT_NAME}")
 find_package(m4c0-bgl-loop)
 if(m4c0-bgl-loop_FOUND)
     add_executable(example example.cpp)
-    target_compile_definitions(example PRIVATE "GL_GLEXT_PROTOTYPES") # FIXME: specially on Windows
     target_link_libraries(example PUBLIC ${PROJECT_NAME})
     target_link_libraries(example PUBLIC m4c0-bgl-loop)
 else()
