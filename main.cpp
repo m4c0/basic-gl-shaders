@@ -96,3 +96,7 @@ m4c0::program & m4c0::program::operator=(m4c0::program && o) {
     return *this;
 }
 
+void m4c0::program::use() const {
+    glUseProgram(handler);
+}
+

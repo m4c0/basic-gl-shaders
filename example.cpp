@@ -27,9 +27,15 @@ public:
         m4c0::main::start();
 
         prog = {
-            { m4c0::shader::vertex,   "#version 330" },
-            { m4c0::shader::fragment, "#version 330" },
+            { m4c0::shader::vertex,   "#version 330\nin vec2 pos; void main() { gl_Position = vec4(pos, 0, 1); }" },
+            { m4c0::shader::fragment, "#version 330\nout vec4 color; void main() { color = vec4(1, 1, 1, 1); }" },
         };
+    }
+
+    void frame() override {
+        m4c0::main::frame();
+
+        prog.use();
     }
 
 private:

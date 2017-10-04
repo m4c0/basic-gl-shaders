@@ -59,6 +59,8 @@ namespace m4c0 {
         program(program &&);
         program & operator=(program &&);
 
+        void use() const;
+
     private:
         GLuint handler;
     };
