@@ -15,10 +15,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include "m4c0-bgl-loop.hpp"
+#include <m4c0-bgl-loop.hpp>
+
+#include "m4c0-bgl-shaders.hpp"
 
 static class _ : m4c0::main {
 public:
     const char * title() override { return "Hello World"; }
+
+    void start() override {
+        m4c0::main::start();
+
+        m4c0::shader s(m4c0::shader::VERTEX, "xxx");
+    }
 } _main;
 
