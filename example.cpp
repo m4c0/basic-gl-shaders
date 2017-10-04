@@ -26,7 +26,13 @@ public:
     void start() override {
         m4c0::main::start();
 
-        m4c0::shader s(m4c0::shader::VERTEX, "xxx");
+        prog = {
+            { m4c0::shader::vertex,   "#version 330" },
+            { m4c0::shader::fragment, "#version 330" },
+        };
     }
+
+private:
+    m4c0::program prog;
 } _main;
 

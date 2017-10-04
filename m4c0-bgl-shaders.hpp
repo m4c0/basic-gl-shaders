@@ -26,12 +26,12 @@ namespace m4c0 {
     public:
         /// !brief Wraps shader constants into a type-safe enum
         enum type {
-            COMPUTE         = GL_COMPUTE_SHADER,
-            FRAGMENT        = GL_FRAGMENT_SHADER,
-            GEOMETRY        = GL_GEOMETRY_SHADER,
-            TESS_EVALUATION = GL_TESS_EVALUATION_SHADER,
-            TESS_CONTROL    = GL_TESS_CONTROL_SHADER,
-            VERTEX          = GL_VERTEX_SHADER,
+            compute         = GL_COMPUTE_SHADER,
+            fragment        = GL_FRAGMENT_SHADER,
+            geometry        = GL_GEOMETRY_SHADER,
+            tess_evaluation = GL_TESS_EVALUATION_SHADER,
+            tess_control    = GL_TESS_CONTROL_SHADER,
+            vertex          = GL_VERTEX_SHADER,
         };
 
         shader(type t, const std::string & src);
@@ -41,6 +41,23 @@ namespace m4c0 {
         shader & operator=(const shader &) = delete;
         shader(shader &&);
         shader & operator=(shader &&);
+
+    private:
+        friend class program;
+
+        GLuint handler;
+    };
+
+    class program {
+    public:
+        program();
+        program(std::initializer_list<shader> shaders);
+        ~program();
+
+        program(const program &) = delete;
+        program & operator=(const program &) = delete;
+        program(program &&);
+        program & operator=(program &&);
 
     private:
         GLuint handler;

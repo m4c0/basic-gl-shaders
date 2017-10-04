@@ -59,3 +59,40 @@ m4c0::shader::~shader() {
     if (handler) glDeleteShader(handler);
 }
 
+m4c0::shader::shader(m4c0::shader && o) {
+    handler = o.handler;
+    o.handler = 0;
+}
+m4c0::shader & m4c0::shader::operator=(m4c0::shader && o) {
+    handler = o.handler;
+    o.handler = 0;
+    return *this;
+}
+
+m4c0::program::program() : handler(0) {
+}
+m4c0::program::program(std::initializer_list<shader> shaders) : handler(0) {
+    handler = glCreateProgram();
+    for (const shader & shader : shaders) {
+        glAttachShader(handler, shader.handler);
+    }
+    glLinkProgram(handler);
+
+    GLint status;
+    glGetProgramiv(handler, GL_LINK_STATUS, &status);
+    if (!status) throw info_log_error(handler, glGetProgramiv, glGetProgramInfoLog);
+}
+m4c0::program::~program() {
+    if (handler) glDeleteProgram(handler);
+}
+
+m4c0::program::program(m4c0::program && o) {
+    handler = o.handler;
+    o.handler = 0;
+}
+m4c0::program & m4c0::program::operator=(m4c0::program && o) {
+    handler = o.handler;
+    o.handler = 0;
+    return *this;
+}
+
